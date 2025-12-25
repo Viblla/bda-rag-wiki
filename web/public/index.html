@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiki Whatiz - RAG-Powered Knowledge</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Cursor Glow Effect -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+    
+    <!-- Animated Background -->
+    <div class="bg-gradient"></div>
+    <div class="bg-noise"></div>
+    <div class="floating-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="2"/>
+                        <path d="M24 12V24L32 28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="24" cy="24" r="3" fill="currentColor"/>
+                    </svg>
+                </div>
+                <h1 class="logo-text">
+                    <span class="logo-main">Wiki</span>
+                    <span class="logo-accent">Whatiz</span>
+                </h1>
+            </div>
+            <p class="tagline">Because you couldn't just read Wikipedia yourself, could you?</p>
+            
+            <!-- Urdu Tagline -->
+            <p class="urdu-tagline" id="statusBadge"><em>سب کو سب نہیں ملتا</em></p>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2 class="hero-title">
+                    <span class="title-line">Oh, hello.</span>
+                    <span class="title-line">I'm your <span class="highlight">Reluctant Expert</span>.</span>
+                </h2>
+                <p class="hero-description">
+                    Look, I'll dig through Wikipedia for you because apparently Google is too complicated. 
+                    Ask me something, and I'll find an answer — or tell you why your question makes no sense. 
+                    No promises I'll be nice about it.
+                </p>
+            </div>
+        </section>
+
+        <!-- Question Input -->
+        <section class="question-section">
+            <div class="input-wrapper">
+                <div class="input-glow"></div>
+                <input 
+                    type="text" 
+                    id="questionInput" 
+                    class="question-input" 
+                    placeholder="Go ahead, ask something obvious..."
+                    autocomplete="off"
+                >
+                <button class="ask-button" id="askButton" onclick="askQuestion()">
+                    <span class="button-text">Enlighten Me</span>
+                    <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Quick Examples -->
+            <div class="examples">
+                <span class="examples-label">Fine, try these:</span>
+                <button class="example-chip" onclick="setQuestion('Why is the sky blue?')">Why is the sky blue?</button>
+                <button class="example-chip" onclick="setQuestion('How do black holes form?')">How do black holes form?</button>
+                <button class="example-chip" onclick="setQuestion('What is quantum entanglement?')">What is quantum entanglement?</button>
+            </div>
+        </section>
+
+        <!-- Loading State -->
+        <section class="loading-section" id="loadingSection">
+            <div class="loading-container">
+                <div class="loading-spinner">
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                </div>
+                <p class="loading-text" id="loadingText">Ugh, fine... searching...</p>
+                <div class="loading-steps">
+                    <div class="step" id="step1"><span class="step-icon">😒</span> Finding stuff</div>
+                    <div class="step" id="step2"><span class="step-icon">🙄</span> Judging relevance</div>
+                    <div class="step" id="step3"><span class="step-icon">😤</span> Writing response</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section" id="resultsSection">
+            <!-- Answer Card -->
+            <div class="answer-card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Here's Your Answer (You're Welcome)</h3>
+                    <div class="timing-badge" id="timingBadge">--</div>
+                </div>
+                <div class="answer-content" id="answerContent">
+                    <!-- Answer will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Sources Grid -->
+            <div class="sources-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                        My Receipts (Sources)
+                    </h3>
+                    <span class="source-count" id="sourceCount">0 sources</span>
+                </div>
+                <div class="sources-grid" id="sourcesGrid">
+                    <!-- Sources will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Refined Queries (if any) -->
+            <div class="refined-section" id="refinedSection">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="M21 21l-4.35-4.35"/>
+                        </svg>
+                        I Had to Rephrase Your Question
+                    </h3>
+                </div>
+                <div class="refined-queries" id="refinedQueries">
+                    <!-- Refined queries will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Latency Breakdown -->
+            <div class="latency-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12,6 12,12 16,14"/>
+                        </svg>
+                        How Long I Suffered
+                    </h3>
+                </div>
+                <div class="latency-bars" id="latencyBars">
+                    <!-- Latency bars will be inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Panel (Slide-out) -->
+        <div class="settings-toggle" onclick="toggleSettings()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+        </div>
+
+        <div class="settings-panel" id="settingsPanel">
+            <div class="settings-header">
+                <h3>Tweak My Brain</h3>
+                <button class="close-settings" onclick="toggleSettings()">×</button>
+            </div>
+            
+            <div class="settings-group">
+                <label class="setting-label">Retriever Mode</label>
+                <select id="retrieverMode" class="setting-select">
+                    <option value="Hybrid" selected>Hybrid (BM25 + Vector)</option>
+                    <option value="BM25">BM25 Only</option>
+                    <option value="Vector">Vector Only</option>
+                </select>
+            </div>
+
+            <div class="settings-group">
+                <label class="setting-label">
+                    <input type="checkbox" id="useRerank" checked>
+                    Use Re-ranking
+                </label>
+            </div>
+
+            <div class="settings-group">
+                <label class="setting-label">
+                    <input type="checkbox" id="useIterative" checked>
+                    Iterative RAG (Query Refinement)
+                </label>
+            </div>
+
+            <div class="settings-group">
+                <label class="setting-label">Top-K Results: <span id="rerankKValue">5</span></label>
+                <input type="range" id="rerankK" min="1" max="10" value="5" class="setting-range" 
+                       oninput="document.getElementById('rerankKValue').textContent = this.value">
+            </div>
+
+            <div class="settings-group">
+                <label class="setting-label">Refined Queries: <span id="refineNValue">3</span></label>
+                <input type="range" id="refineN" min="1" max="5" value="3" class="setting-range"
+                       oninput="document.getElementById('refineNValue').textContent = this.value">
+            </div>
+
+            <button class="warmup-button" onclick="warmupCache()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+                Wake Me Up (Cache)
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built with ☕ and existential dread using RAG, FAISS, and Ollama</p>
+            <p class="footer-sub">Powered by Wikipedia — the encyclopedia anyone can edit (scary, right?)</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
