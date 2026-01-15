@@ -1,8 +1,8 @@
-# Wiki Whatiz 🔮
+# Wiki Whatiz
 
 > *سب کو سب نہیں ملتا*
 
-A sarcastic RAG (Retrieval-Augmented Generation) powered Wikipedia knowledge assistant with a beautifully dark "Cabinet of Wonders" inspired UI.
+A RAG (Retrieval-Augmented Generation) powered Wikipedia knowledge assistant with a beautifully dark "Cabinet of Wonders" inspired UI.
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green?logo=fastapi)
@@ -11,26 +11,26 @@ A sarcastic RAG (Retrieval-Augmented Generation) powered Wikipedia knowledge ass
 
 ---
 
-## 📖 About
+## About
 
 **Wiki Whatiz** is a Big Data semester project that implements a complete RAG pipeline to answer questions using Wikipedia as a knowledge base. The system combines:
 
 - **Hybrid Retrieval**: BM25 + Vector search with FAISS
 - **Query Refinement**: LLM-powered query expansion
 - **Re-ranking**: Cross-encoder based relevance scoring
-- **Sarcastic Personality**: Because why be helpful when you can be helpful *and* judgy? 😒
+- **Intelligent Responses**: Powered by local LLM with personality
 
-## ✨ Features
+## Features
 
-- 🎨 **Beautiful Dark UI** - Cabinet of Wonders inspired theme with purple accents
-- 🖱️ **Cursor Glow Effect** - Smooth motion-blur following cursor
-- 📊 **Latency Visualization** - Animated bar charts showing pipeline timing
-- 🎭 **Sarcastic Responses** - LLM with attitude and emojis
-- ⚡ **GPU Accelerated** - CUDA support for faster embeddings
-- 🔍 **Hybrid Search** - Combines keyword (BM25) and semantic (vector) search
-- 📝 **Source Citations** - Shows Wikipedia sources with relevance scores
+- **Beautiful Dark UI** - Cabinet of Wonders inspired theme with purple accents
+- **Cursor Glow Effect** - Smooth motion-blur following cursor
+- **Latency Visualization** - Animated bar charts showing pipeline timing
+- **Smart Responses** - LLM with contextual understanding
+- **GPU Accelerated** - CUDA support for faster embeddings
+- **Hybrid Search** - Combines keyword (BM25) and semantic (vector) search
+- **Source Citations** - Shows Wikipedia sources with relevance scores
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Component | Technology |
 |-----------|------------|
@@ -42,7 +42,7 @@ A sarcastic RAG (Retrieval-Augmented Generation) powered Wikipedia knowledge ass
 | Keyword Search | rank-bm25 |
 | Re-ranking | Cross-encoder |
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -54,7 +54,7 @@ A sarcastic RAG (Retrieval-Augmented Generation) powered Wikipedia knowledge ass
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/bda-rag-wiki.git
+   git clone https://github.com/Viblla/bda-rag-wiki.git
    cd bda-rag-wiki
    ```
 
@@ -86,7 +86,7 @@ A sarcastic RAG (Retrieval-Augmented Generation) powered Wikipedia knowledge ass
    http://localhost:8000
    ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 bda-rag-wiki/
@@ -114,7 +114,7 @@ bda-rag-wiki/
         └── app.js         # Frontend logic
 ```
 
-## 🎯 API Endpoints
+## API Endpoints
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -124,16 +124,16 @@ bda-rag-wiki/
 | `/retrieve` | POST | Retrieve sources only |
 | `/warmup` | POST | Warm up model cache |
 
-## 📊 RAG Pipeline
+## RAG Pipeline
 
 ```
 Question → Query Refinement → Hybrid Retrieval → Re-ranking → LLM Generation → Answer
-              ↓                    ↓                ↓              ↓
-         Expand query         BM25 + Vector    Cross-encoder   Sarcastic
-         with LLM             similarity       scoring         response 😤
+              |                    |              |              |
+         Expand query         BM25 + Vector    Cross-encoder    Contextual
+         with LLM             similarity       scoring           response
 ```
 
-## 🎨 UI Features
+## UI Features
 
 - **Staggered Animations** - Elements fade in sequentially
 - **Scroll-triggered Effects** - Source cards animate on scroll
@@ -141,7 +141,7 @@ Question → Query Refinement → Hybrid Retrieval → Re-ranking → LLM Genera
 - **Motion Blur Cursor** - Smooth trailing glow effect
 - **Color Transitions** - Key answers highlighted with animated color
 
-## 👨‍💻 Author
+## Author
 
 **Ahmed Bilal Nazim**  
 Registration No: **2022064**  
@@ -150,12 +150,12 @@ Big Data Analytics - Semester Project
 
 ---
 
-## 📄 License
+## License
 
-This project is for educational purposes as part of the Big Data Analytics course at GIKI.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
 <p align="center">
-  <em>"Because you couldn't just read Wikipedia yourself, could you?"</em> 🙄
+  <em>"Because you couldn't just read Wikipedia yourself, could you?"</em>
 </p>
